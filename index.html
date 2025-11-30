@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Funciones vectoriales: conceptos, operaciones y aplicaciones</title>
+
+    <!-- Tipografía -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos mínimos (puedes pegar los tuyos originales aquí si los tienes) -->
+    <style>
+        :root {
+            --bg: #0f172a;
+            --panel: #111827;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+            --border: #1f2937;
+            --link: #7dd3fc;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, sans-serif;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .cover {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 24px 0 32px;
+            background: var(--panel);
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 8px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin: 0 0 12px;
+        }
+
+        .meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--muted);
+        }
+
+        .toc {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            background: var(--panel);
+            margin-bottom: 24px;
+        }
+
+        .toc h2 {
+            font-size: 1.1rem;
+            margin: 0 0 8px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            columns: 2;
+            column-gap: 24px;
+        }
+
+        .toc li {
+            margin: 6px 0;
+        }
+
+        section {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            background: var(--panel);
+            margin-bottom: 20px;
+        }
+
+        section h2 {
+            font-size: 1.35rem;
+            margin: 0 0 12px;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 6px;
+        }
+
+        .lead {
+            font-weight: 600;
+        }
+
+        a {
+            color: var(--link);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Portada -->
+        <header class="cover" id="portada">
+            <h1 class="title">Funciones vectoriales: conceptos, operaciones y aplicaciones</h1>
+            <p class="subtitle">Cálculo multivariable · Ingeniería y tecnología · Reporte didáctico</p>
+            <div class="meta">
+                <span>Autor: Javier</span>
+                <span>Ubicación: Izúcar de Matamoros, Puebla</span>
+                <span>Fecha: Noviembre 2025</span>
+            </div>
+        </header>
+
+        <!-- Tabla de contenidos -->
+        <nav class="toc">
+            <h2>Contenido</h2>
+            <ul>
+                <li><a href="#introduccion">1. Introducción</a></li>
+                <li><a href="#conceptos">2. Conceptos fundamentales</a></li>
+                <li><a href="#vectores-2d">3. Vectores en dos dimensiones</a></li>
+                <li><a href="#vectores-3d">4. Vectores en tres dimensiones</a></li>
+                <li><a href="#operaciones">5. Operaciones con vectores</a></li>
+                <li><a href="#funciones-vectoriales">6. Funciones vectoriales</a></li>
+                <li><a href="#transformaciones">7. Transformaciones de vectores</a></li>
+                <li><a href="#metodos">8. Métodos de solución en cálculo vectorial</a></li>
+                <li><a href="#ejercicios">9. Ejercicios resueltos</a></li>
+                <li><a href="#aplicaciones">10. Aplicaciones en ingeniería y tecnología</a></li>
+                <li><a href="#conclusiones">11. Conclusiones</a></li>
+                <li><a href="#referencias">12. Referencias</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1. Introducción -->
+        <section id="introduccion" class="anchor">
+            <h2>1. Introducción</h2>
+            <p>Las funciones vectoriales extienden el concepto de función al asociar cada número real con un vector. Son
+                fundamentales en el cálculo multivariable porque describen trayectorias, movimientos y fenómenos físicos
+                en dos y tres dimensiones.</p>
+            <p>En ingeniería y ciencias aplicadas, se emplean para modelar el movimiento de partículas, representar
+                campos de fuerza, calcular trayectorias en robótica, simular gráficos computacionales y analizar
+                estructuras tridimensionales. Su estudio integra álgebra lineal, geometría analítica y cálculo
+                diferencial e integral.</p>
+        </section>
+
+        <section id="conceptos" class="anchor">
+            <h2>2. Conceptos fundamentales</h2>
+            <ul>
+                <li><span class="lead">Vector:</span> Magnitud con dirección y sentido, representada como una flecha en
+                    el plano o el espacio.</li>
+                <li>
+                    <span class="lead">Componentes 2D:</span> Un vector en $ \mathbb{R}^2 $ se escribe $ \vec{v} =
+                    \langle x, y \rangle $. <br />
+                    Magnitud: $ \| \vec{v} \| = \sqrt{x^2 + y^2} $.
+                </li>
+                <li>
+                    <span class="lead">Componentes 3D:</span> Un vector en $ \mathbb{R}^3 $ se escribe $ \vec{v} =
+                    \langle x, y, z \rangle $. <br />
+                    Magnitud: $ \| \vec{v} \| = \sqrt{x^2 + y^2 + z^2} $.
+                </li>
+                <li>
+                    <span class="lead">Función vectorial:</span> Aplicación $ \vec{v}(t) : \mathbb{R} \to \mathbb{R}^n $
+                    tal que $ \vec{v}(t) = \langle x(t), y(t), z(t) \rangle $.
+                </li>
+                <li>
+                    <span class="lead">Interpretación geométrica:</span> La imagen de $ \vec{v}(t) $ puede describir una
+                    curva (línea, parábola, hélice, etc.) en el plano o espacio.
+                </li>
+            </ul>
+        </section>
+
+
+        <!-- 3. Vectores en dos dimensiones -->
+        <section id="vectores-2d" class="anchor">
+            <h2>3. Vectores en dos dimensiones</h2>
+            <p>
+                En $ \mathbb{R}^2 $, los vectores se representan como flechas desde el origen hasta el punto
+                $(x,y)$. Un ejemplo es $ \vec{v} = (3,-2) $, cuya magnitud es
+                $ \| \vec{v} \| = \sqrt{3^2 + (-2)^2} = \sqrt{13} $.
+            </p>
+            <ul>
+                <li><span class="lead">Aplicaciones en física:</span> Desplazamiento, velocidad y aceleración en el
+                    plano.</li>
+                <li><span class="lead">Computación gráfica:</span> Coordenadas de píxeles y transformaciones en 2D.</li>
+                <li><span class="lead">Ingeniería:</span> Fuerzas en estructuras planas.</li>
+            </ul>
+            <p>
+                Operaciones básicas: suma y resta componente a componente; multiplicación por escalar $k$ como
+                $ k \vec{v} = (kx, ky) $.
+            </p>
+        </section>
+
+        <!-- 4. Vectores en tres dimensiones -->
+        <section id="vectores-3d" class="anchor">
+            <h2>4. Vectores en tres dimensiones</h2>
+            <p>
+                En $ \mathbb{R}^3 $, $ \vec{v} = (x,y,z) $ con magnitud
+                $ \| \vec{v} \| = \sqrt{x^2 + y^2 + z^2} $. Por ejemplo,
+                $ \vec{v} = (1,2,2) $ tiene $ \| \vec{v} \| = 3 $.
+            </p>
+            <ul>
+                <li><span class="lead">Física:</span> Movimiento de partículas en el espacio.</li>
+                <li><span class="lead">Ingeniería civil:</span> Esfuerzos en estructuras tridimensionales.</li>
+                <li><span class="lead">Robótica:</span> Trayectorias de brazos mecánicos.</li>
+                <li><span class="lead">Realidad virtual:</span> Objetos en ambientes 3D.</li>
+            </ul>
+            <p>
+                En 3D surgen operaciones como el producto cruzado, que genera un vector perpendicular a dos vectores
+                dados y permite calcular áreas y normales de superficies.
+            </p>
+        </section>
+
+        <!-- 5. Operaciones con vectores -->
+        <section id="operaciones" class="anchor">
+            <h2>5. Operaciones con vectores</h2>
+            <ul>
+                <li>
+                    <span class="lead">Suma/resta:</span>
+                    $ \vec{u} \pm \vec{v} = (u_1 \pm v_1,\, u_2 \pm v_2,\, u_3 \pm v_3) $.
+                </li>
+                <li>
+                    <span class="lead">Producto escalar:</span>
+                    $ \vec{u} \cdot \vec{v} = u_1 v_1 + u_2 v_2 + u_3 v_3 = \| \vec{u} \| \, \| \vec{v} \| \cos \theta
+                    $.
+                </li>
+                <li>
+                    <span class="lead">Producto vectorial (3D):</span>
+                    $$
+                    \vec{u} \times \vec{v} =
+                    \begin{vmatrix}
+                    \hat{\imath} & \hat{\jmath} & \hat{k} \\
+                    u_1 & u_2 & u_3 \\
+                    v_1 & v_2 & v_3
+                    \end{vmatrix}
+                    = (u_2 v_3 - u_3 v_2,\; u_3 v_1 - u_1 v_3,\; u_1 v_2 - u_2 v_1).
+                    $$
+                </li>
+            </ul>
+            <div class="code">
+                <p><strong>Ejemplo práctico:</strong></p>
+                <p>Si $ \vec{u} = (2,3,0) $ y $ \vec{v} = (1,4,0) $:</p>
+                <p>Producto escalar: $ \vec{u} \cdot \vec{v} = 2 \cdot 1 + 3 \cdot 4 = 14 $.</p>
+                <p>Producto cruzado: $ \vec{u} \times \vec{v} = (0,0, 2 \cdot 4 - 3 \cdot 1) = (0,0,5) $.</p>
+            </div>
+        </section>
+
+        <!-- 6. Funciones vectoriales -->
+        <section id="funciones-vectoriales" class="anchor">
+            <h2>6. Funciones vectoriales</h2>
+            <p>
+                Una función vectorial en el espacio se define como $ \vec{r}(t) = (x(t), y(t), z(t)) $.
+                Por ejemplo, $ \vec{r}(t) = (\cos t, \sin t, t) $ describe una hélice.
+            </p>
+            <ul>
+                <li><span class="lead">Derivada (velocidad):</span> $ \vec{r}'(t) = (x'(t), y'(t), z'(t)) $.</li>
+                <li><span class="lead">Segunda derivada (aceleración):</span> $ \vec{r}''(t) = (x''(t), y''(t), z''(t))
+                    $.</li>
+                <li><span class="lead">Visualización:</span> La curva $ \{ \vec{r}(t) : t \in I \} $ recorre una
+                    trayectoria en $ \mathbb{R}^2 $ o $ \mathbb{R}^3 $.</li>
+            </ul>
+        </section>
+
+        <!-- 7. Transformaciones de vectores -->
+        <section id="transformaciones" class="anchor">
+            <h2>7. Transformaciones de vectores</h2>
+            <ul>
+                <li><span class="lead">Traslación:</span> $ \vec{v}' = \vec{v} + \vec{t} $.</li>
+                <li><span class="lead">Escalamiento:</span> $ \vec{v}' = k \cdot \vec{v} $.</li>
+                <li>
+                    <span class="lead">Rotación en 2D:</span>
+                    $$
+                    \begin{bmatrix} x' \\ y' \end{bmatrix} =
+                    \begin{bmatrix}
+                    \cos \theta & -\sin \theta \\
+                    \sin \theta & \cos \theta
+                    \end{bmatrix}
+                    \begin{bmatrix} x \\ y \end{bmatrix}
+                    $$
+                </li>
+                <li><span class="lead">Rotaciones en 3D:</span> Mediante matrices alrededor de los ejes $x$, $y$ y $z$.
+                </li>
+                <li><span class="lead">Reflexión:</span> Inversión de componentes respecto de un eje o plano.</li>
+            </ul>
+            <p>Estas transformaciones son esenciales en gráficos, CAD y simulaciones físicas.</p>
+        </section>
+
+        <!-- 8. Métodos de solución en cálculo vectorial -->
+        <section id="metodos" class="anchor">
+            <h2>8. Métodos de solución en cálculo vectorial</h2>
+            <ul>
+                <li>
+                    <span class="lead">Derivadas:</span> Para velocidad y aceleración: si
+                    $ \vec{r}(t) = (t, t^2, t^3) $, entonces
+                    $ \vec{v}(t) = (1, 2t, 3t^2) $ y
+                    $ \vec{a}(t) = (0, 2, 6t) $.
+                </li>
+                <li>
+                    <span class="lead">Integrales:</span> Para longitud de curva y trabajo:
+                    $ L = \int_a^b \| \vec{r}'(t) \| \, dt $;
+                    $ W = \int_C \vec{F} \cdot d\vec{r} $.
+                </li>
+            </ul>
+        </section>
+
+        <!-- 9. Ejercicios resueltos -->
+        <section id="ejercicios" class="anchor">
+            <h2>9. Ejercicios resueltos</h2>
+            <ul>
+                <li><span class="lead">Producto escalar:</span> $ \vec{u} = (2,3), \; \vec{v} = (1,4) \Rightarrow
+                    \vec{u} \cdot \vec{v} = 14 $.</li>
+                <li><span class="lead">Producto cruzado:</span> $ \vec{u} = (1,0,0), \; \vec{v} = (0,1,0) \Rightarrow
+                    \vec{u} \times \vec{v} = (0,0,1) $.</li>
+                <li><span class="lead">Rotación 2D:</span> $ \vec{v} = (1,0) $, rotado $ 90^\circ \Rightarrow (0,1) $.
+                </li>
+                <li><span class="lead">Longitud de curva:</span> Para $ \vec{r}(t) = (\cos t, \sin t) $, $ t \in
+                    [0,2\pi] $, $ L = 2\pi $.</li>
+                <li><span class="lead">Trabajo por fuerza constante:</span> $ \vec{F} = (2,3) $, $ \vec{d} = (4,1)
+                    \Rightarrow W = \vec{F} \cdot \vec{d} = 11 $.</li>
+            </ul>
+        </section>
+
+        <!-- 10. Aplicaciones -->
+        <section id="aplicaciones" class="anchor">
+            <h2>10. Aplicaciones en ingeniería y tecnología</h2>
+            <ul>
+                <li><span class="lead">Gráficos computacionales:</span> Rotaciones, escalados y proyecciones para
+                    renderizado.</li>
+                <li><span class="lead">Robótica:</span> Planificación de trayectorias y control cinemático.</li>
+                <li><span class="lead">Física:</span> Dinámica de partículas y campos.</li>
+                <li><span class="lead">Ingeniería civil:</span> Modelado de esfuerzos y deformaciones tridimensionales.
+                </li>
+                <li><span class="lead">Inteligencia artificial:</span> Representación vectorial de datos en espacios
+                    métricos.</li>
+            </ul>
+        </section>
+
+        <!-- 11. Conclusiones -->
+        <section id="conclusiones" class="anchor">
+            <h2>11. Conclusiones</h2>
+            <ul>
+                <li><span class="lead">Importancia conceptual:</span> Las funciones vectoriales precisan trayectorias y
+                    fenómenos físicos complejos.</li>
+                <li><span class="lead">Aplicaciones transversales:</span> Desde fuerzas y desplazamientos hasta
+                    simulación gráfica.</li>
+                <li><span class="lead">Transformaciones clave:</span> Rotación, traslación y escalamiento son pilares
+                    del diseño digital.</li>
+                <li><span class="lead">Métodos de solución:</span> Derivadas e integrales permiten calcular velocidad,
+                    aceleración, longitudes y trabajo.</li>
+                <li><span class="lead">Valor didáctico:</span> La interpretación geométrica conecta teoría y práctica
+                    visual.</li>
+            </ul>
+        </section>
+
+        <!-- 12. Referencias -->
+        <section id="referencias" class="anchor">
+            <h2>12. Referencias</h2>
+            <ul>
+                <li><span class="lead">Stewart, James (2010):</span> Cálculo de varias variables: Conceptos y contextos.
+                    CENGAGE Learning.</li>
+                <li><span class="lead">Zill, Dennis G. (2011):</span> Matemáticas 3, Cálculo de varias variables. McGraw
+                    Hill.</li>
+                <li><span class="lead">Larson, Ron (2010):</span> Cálculo 2, de varias variables. McGraw Hill
+                    Interamericana.</li>
+                <li><span class="lead">Stewart, James (2012):</span> Precálculo: Matemáticas para el Cálculo. 6ª
+                    Edición. CENGAGE Learning.</li>
+            </ul>
+        </section>
+
+        <footer>
+            © 2025 · Funciones vectoriales · Página generada a partir del reporte de Javier.
+        </footer>
+    </div>
+</body>
+
+</html>
